@@ -137,7 +137,7 @@ Kitty.prototype = Object.create(Mammal.prototype)
 
 //lets add functionality.
 Animal.prototype.eat = function() {console.log('yum')};
-Mamal.prototype.milk = function() {console.log('made milk')};
+Mammal.prototype.milk = function() {console.log('made milk')};
 Kitty.prototype.scratch = function() {console.log('I scratch you')};
 // Make some instances
 var callie = new Kitty();
@@ -153,5 +153,38 @@ someMammal.scratch() // Error <Animal> has no method scratch
 // What if we change callie's eat method
 Kitty.prototype.eat = function() {console.log('yummy wet food and catnip')};
 callie.eat() // yummy wet food and catnip
-someAnimal.eat() // yum
+someMammal.eat() // yum
 //This happens because javascript looks at the most specific prototype first and goes up the chain. So the most specific object's methods overwrite the methods from the objects it inherits from.
+```
+
+##es6 syntax
+
+Es6 makes it way easier to read and understand which objects are inheriting from which, but it is a little deceptive because it makes it seem as though javascript has classical inheritance, though it only has prototypal inheritance. I recommend trying your best to understand what we wrote in the previous section but using the syntax in this section. Let's use some better syntax!
+
+```
+
+class Animal {
+  constructor(name){
+    this.name = name;
+  }
+  eat() {
+    console.log('yum')
+  }
+}
+
+class Mammal extends Animal {
+  milk() {
+    console.log('made milk')
+  }
+}
+
+class Kitty extends Mammal {
+  scratch() {
+    console.log('I scratch you')
+  }
+}
+
+```
+
+##Conclusion
+If you feel intimidated by prototypal inheritance, just remember all it really means is that objects inherit properties from other objects. When we want a more specific object, we basically copy a more generic object and change or add what we need to. It benefits programmers because its simple and it DRYs up your code.
