@@ -123,6 +123,8 @@ Not exactly. Inheritance in javascript is prototype-based not class based. There
 It means that if you want to create inheritance hierarchies in javascript, you have to create a new prototype for subclasses based on superclass prototypes.
 Let's just jump into some examples.
 
+Code this out with me in your text editor
+
 ```
 
 // let's start with some empty constructor functions that are unrelated to each other.
@@ -157,7 +159,14 @@ someMammal.eat() // yum
 //This happens because javascript looks at the most specific prototype first and goes up the chain. So the most specific object's methods overwrite the methods from the objects it inherits from.
 ```
 
-*How do both eat methods exist?* Overwriting a method is an example of the prototype chain in action. When we added an eat function to the Kitty prototype, we did not actually overwrite the original method, we added another method to a more specific object's prototype. When you call a method on an object, javascript "walks up" the chain. It starts on the object you called the method on, which is the most specific relevant object. So when you call eat on a Kitty, it checks the Kitty's prototype for an eat method, if it finds the method it executes it, otherwise it moves on to the Mammal prototype, then finally the Animal prototype.
+###Do you have any questions about how this works? What's weird about it?
+
+
+
+*How do both eat methods exist?*
+
+
+Overwriting a method is an example of the prototype chain in action. When we added an eat function to the Kitty prototype, we did not actually overwrite the original method, we added another method to a more specific object's prototype. When you call a method on an object, javascript "walks up" the chain. It starts on the object you called the method on, which is the most specific relevant object. So when you call eat on a Kitty, it checks the Kitty's prototype for an eat method, if it finds the method it executes it, otherwise it moves on to the Mammal prototype, then finally the Animal prototype.
 
 ##es6 syntax
 
