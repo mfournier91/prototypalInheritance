@@ -157,6 +157,8 @@ someMammal.eat() // yum
 //This happens because javascript looks at the most specific prototype first and goes up the chain. So the most specific object's methods overwrite the methods from the objects it inherits from.
 ```
 
+*How do both eat methods exist?* Overwriting a method is an example of the prototype chain in action. When we added an eat function to the Kitty prototype, we did not actually overwrite the original method, we added another method to a more specific object's prototype. When you call a method on an object, javascript "walks up" the chain. It starts on the object you called the method on, which is the most specific relevant object. So when you call eat on a Kitty, it checks the Kitty's prototype for an eat method, if it finds the method it executes it, otherwise it moves on to the Mammal prototype, then finally the Animal prototype.
+
 ##es6 syntax
 
 Es6 makes it way easier to read and understand which objects are inheriting from which, but it is a little deceptive because it makes it seem as though javascript has classical inheritance, though it only has prototypal inheritance. I recommend trying your best to understand what we wrote in the previous section but using the syntax in this section. Let's use some better syntax!
@@ -184,7 +186,75 @@ class Kitty extends Mammal {
   }
 }
 
+var callie = new Kitty('callie')
+console.log(callie); // Kitty {name: 'callie'}
+callie.scratch() // I scratch you
+
 ```
+
+*Show me cool stuff you can do with what we learned today*
+
+##Use cases
+
+Since we've been talking about animals this whole time lets pretend we had a tamagotchi game or something similar where you had to care for animals. Read, then Copy and paste this code into your browser and play with it. Try to see how it works and what it does.
+
+```
+class Animal {
+  constructor(name, type, hp){
+    this.name = name;
+    this.type = type;  // you might have your reasons for including type even though i said it was silly
+    this.hp = hp;
+  }
+  eat(food){
+    if (food.type == this.type) {
+      console.log('Yum');
+      this.happyPoints(10);
+    } else {
+      console.log('Yuck. ' + this.name + ' barfed up its lunch');
+      this.happyPoints(-10);
+    }
+  }
+  happyPoints(points) {
+    this.hp += points;
+    if (this.hp > 70) {
+      console.log(this.name + " is feeling loved.");
+    }
+    if (this.hp < 30) {
+      console.log(this.name + " is feeling neglected");
+    }
+    console.log(this.name + " is " + this.hp + " percent happy");
+  }
+}
+
+class Cat extends Animal {
+  chaseString() {
+    console.log(this.name + ' is having fun chasing string');
+    this.happyPoints(5);
+  }
+}
+
+class Dog extends Animal {
+  playFetch() {
+    console.log(this.name + ' is having fun playing fetch');
+    this.happyPoints(7);
+  }
+}
+
+var fluffy = new Cat('Fluffy', 'cat', 50);
+var fido = new Dog('Fido', 'dog', 50);
+var catfood = {type: 'cat'}
+var dogfood = {type: 'dog'}
+```
+
+There are nearly infinity possible uses to inheritance. Its up to you to decide what you want to do.
+Heres a couple quick ideas:
+
+* A shoppingCart object which has methods for getSubtotal, addItem, and deleteItem. A userCart inherits those and handles authentication
+* Making a custom object that inherits from Array but has a method to deleteIndex.
+
+Take three minutes with the person next to you and come up with a possible use for inheritance.
+
+
 
 ##Conclusion
 If you feel intimidated by prototypal inheritance, just remember all it really means is that objects inherit properties from other objects. When we want a more specific object, we basically copy a more generic object and change or add what we need to. It benefits programmers because its simple and it DRYs up your code.
